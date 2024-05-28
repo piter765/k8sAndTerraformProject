@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeappdeployment
+  labels:
+    type: backend
+    app: nodeapp
+spec:
+  replicas: 1
+  selector: # Specifies how the Deployment identifies which Pods it manages.
+    matchLabels: # Specifies the labels that the Deployment uses to find the Pods it manages. In this case, it selects Pods with labels type: backend and app: nodeapp.
+      type: backend
+      app: nodeapp
+  template: # Specifies the pod template used to create new Pods.
+    metadata:
+      name: nodeappod
+      labels:
+        type: backend
+        app: nodeapp
+    spec: # Specifies the desired state for the Pods created from this template.
+      containers:
+        - name: nodeappcontainer
+          image: us.gcr.io/caramel-comfort-424317-p8/nodeapp:v1 
+          ports:
+            - containerPort: 8000
